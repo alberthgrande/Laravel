@@ -100,3 +100,31 @@ return new class extends Migration
 };
 
 ```
+
+## Updating the columns is throwing errors
+
+```
+SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column `name` to `username`' at line 1 (Connection: mysql, SQL: alter table `users` rename column `name` to `username`)
+
+php artisan make:migration update_user_table_name_to_username  --table=users
+
+
+public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'username');
+        });
+    }
+
+
+ public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('username', 'name');
+        });
+    }
+```
+
+## Solutions
+
+-   composer require doctrine/dbal
